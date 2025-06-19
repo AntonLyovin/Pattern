@@ -1,17 +1,18 @@
 package org.example.proxy;
 
 public class DatabaseProxy implements Database {
-    private String dbName;
+    private Database realDatabase;
+    private static final String BASE_URL = "http://localhost:8080/";
 
-    private RealDatabase realDatabase;
+
 
     public DatabaseProxy(String dbName) {
-        this.dbName = dbName;
         this.realDatabase = new RealDatabase(dbName);
     }
 
     @Override
     public String getConnection() {
-        return realDatabase.getConnection();
+        String dbName = realDatabase.getConnection();
+        return BASE_URL + dbName;
     }
 }
